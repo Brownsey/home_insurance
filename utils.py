@@ -1,4 +1,5 @@
 import pandas as pd
+import pickle
 
 def get_missing_column_values(df):
     """Generates a table containing the columns which contain missing data
@@ -16,7 +17,20 @@ def get_missing_column_values(df):
                 .loc[count.ne(0)]).reset_index().rename(columns={"index":"column"}).round(2)
     
     return df.sort_values("missing_percentage", ascending=False)
-    
+
+
+#pickle functions for saving model outputs and option to import them back in
+def pickle_model(params, file):
+    f = open(file,"wb")
+    pickle.dump(params,f)
+    f.close()
+
+def import_pickled_model(file):    
+    infile = open(file,'rb')
+    pickled_model = pickle.load(infile)
+    infile.close()
+    return pickled_model
+
 
 
 
